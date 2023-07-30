@@ -1,0 +1,88 @@
+{% extends "core/base.html" %}
+
+{% block title %}Links{% endblock %}
+
+{% block additional_css %}
+{% load static %}
+<style>
+    body{
+        background-image: url("{% static 'images/img13.jpg' %}");
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background-color: #1e2a38;
+        background-position: center;
+        background-size: cover;
+        background-blend-mode: overlay;
+        background-attachment: fixed;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .btn{
+        border: 1px solid #666;
+        border-radius: 20px;
+        cursor: pointer;
+        padding: 8px 22px;
+        position: relative;
+    }
+    .btn:hover{
+        background-color: #34495E;
+        border: 1px solid #34495E;
+        color: #EBEDEF;
+    }
+    .special{
+        background-color: #34495E;
+        border: 1px solid #34495E;
+        color: #EBEDEF;
+    }
+    #buton.highlight {
+        background-color: #34495E;
+        border: 1px solid #34495E;
+        color: #EBEDEF;
+      }
+</style>
+{% endblock %}
+
+{% block content %}
+    <section class ='flex flex-col h-screen'>
+        <h1 class ="mb-4 text-3xl" >Links</h1>
+        <div id = 'mydiv' class='mb-6 space-x-6 space-y-6'>
+            {% for category in request.user.categories.all %}
+                <a id = 'buton' class = 'btn' href ="{% url 'links:links' %}?category ={{ category.id }}">{{category.name}}</a>           
+            {% endfor %}
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+            {% for link in links %}
+                <div class="bg-gray-100 p-6 rounded-xl">
+                    <h2 class="mb-4 text-xl">{{ link.name }}</h2>
+
+                    {% if link.description %}
+                        <p class="mb-4 text-xs">{{ link.description }}</p>
+                    {% endif %}
+
+                    <a href="{{ link.url }}" class="text-cyan-700" target="_blank">Open link</a>
+                    |
+                    <a href="{% url 'links:edit_link' link.id %}" class="text-cyan-700">Edit</a>
+                    |
+                    <a href="{% url 'links:delete_link' link.id %}" class="text-cyan-700">Delete</a>
+                </div>
+            {% empty %}
+                <div class="bg-gray-100 p-6 rounded-xl">Hi {{name}}, currently you don't have any links for this category... </br> <a class='text-cyan-900 text-xl' href="{% url 'links:create_link' %}"> Add links</a></div>
+            {% endfor %}
+        </div>        
+    </section>
+{% endblock %}
+
+{% block additional_script %}
+  <script>
+    const buttons = document.querySelectorAll('buton');
+
+    function handleClick(event) {
+      const clickedButton = event.target;
+      buttons.forEach((button) => button.classList.remove('highlight'));
+      clickedButton.classList.add('highlight');
+    }
+    buttons.forEach((button) => {
+      button.addEventListener('click', handleClick);
+    });
+  </script> 
+{% endblock %}

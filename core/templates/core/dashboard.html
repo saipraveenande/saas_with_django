@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block additional_css %}
+  {% load static%}
+  <style>
+    body{
+        background-image: url("{% static 'images/img13.jpg' %}");
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background-color: #1e2a38;
+        background-position: center;
+        background-size: cover;
+        background-blend-mode: overlay;
+        background-attachment: fixed;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+  </style> 
+{% endblock %}
+{% block content %}
+    <section class ='flex flex-col h-screen'>
+        <h1 class ="mb-4 text-xl" >Dashboard</h1>
+        <div class = "p-6 bg-gray-100 rounded-xl">
+            <h2 class = "mb-4 text-xl">Newest links</h2>
+            
+            {% for link in newest_links %}
+                <div class ="mb-2 flex justify-between items-center"> 
+                    <p>{{ link.name }}</p>
+                    <a href ="{{link.url}}" class = "underline" target = "_blank">Open link</a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
+

@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+
+{%block title%}Welcome{%endblock%}
+{% block additional_css %}
+  {% load static%}
+  <style>
+    body{
+        background-image: url("{% static 'images/img15.jpg' %}");
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        background-color: #1e2a38;
+        background-position: center;
+        background-size: cover;
+        background-blend-mode: overlay;
+        background-color: rgba(0, 0, 0, 0);
+    }
+  </style> 
+{% endblock %}
+{%block content%}
+    <section class = 'flex justify-center items-center h-screen'> 
+        <div class = 'text-center mx-auto'>
+          <h1 class = 'text-6xl font-semibold'> Welcome {{name}}!</h1>
+          <p class = 'font-light text-3xl mt-5'>Connect with world from here </br> by storing all your links with different categories.</p>
+          <p class="text-gray-600 text-2xl mt-4">Organise all your social media and personal links.</p>
+        </div>
+    </section>
+{% endblock%}
+
+{% comment %} Organise all your links along with their description and categories at free of cost. You are one step away to organise all your social media and personal links. {% endcomment %}
